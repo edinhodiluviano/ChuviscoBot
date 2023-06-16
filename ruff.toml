@@ -43,4 +43,3 @@ flake8-quotes.docstring-quotes = "single"
 
 [mccabe]
 max-complexity = 5
-
