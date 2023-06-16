@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "Bot de Telegram para os grupos oficiais do Garoa Hacker Clube"
 authors = ['Felipe "Juca" Sanches', "Luciana Marques", "Priscilla Gutierres"]
 readme = "README.md"
-copyright = "2019, LucianaMarques"
 
 [tool.poetry.dependencies]
 python = "^3.11"
