@@ -7,14 +7,14 @@ from chuvisco import db
 
 
 @contextlib.contextmanager
-def patch_db_dir(new_value: str):
-    original_db_dir = os.environ.get('DB_DIR', None)
-    os.environ['DB_DIR'] = new_value
+def patch_env_var(var_name: str, new_value: str):
+    original_value = os.environ.get(var_name, None)
+    os.environ[var_name] = new_value
     yield
-    if original_db_dir is None:
-        del os.environ['DB_DIR']
+    if original_value is None:
+        del os.environ[var_name]
     else:
-        os.environ['DB_DIR'] = original_db_dir
+        os.environ[var_name] = original_value
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -23,7 +23,13 @@ def _clear_database():
     db._create_engine.cache_clear()
 
 
+@pytest.fixture(scope='function', autouse=True)
+def _create_fake_token():
+    with patch_env_var('TOKEN', '666'):
+        yield
+
+
 @pytest.fixture()
 def session():
-    with patch_db_dir(''), db.create_session() as session:
+    with patch_env_var('DB_DIR', ''), db.create_session() as session:
         yield session

@@ -2,7 +2,7 @@ import sqlalchemy as sa
 
 from chuvisco import db
 
-from .conftest import patch_db_dir
+from .conftest import patch_env_var
 
 
 def test_given_test_env_when_create_session_then_can_execute_query(
@@ -15,7 +15,7 @@ def test_given_test_env_when_create_session_then_can_execute_query(
 
 
 def test_given_temp_dir_when_create_session_then_can_execute_query(tmp_path):
-    with patch_db_dir(str(tmp_path)):
+    with patch_env_var('DB_DIR', str(tmp_path)):
         stmt = sa.text('SELECT 1')
         with db.create_session() as session_:
             r = session_.execute(stmt).scalar()
@@ -23,7 +23,7 @@ def test_given_temp_dir_when_create_session_then_can_execute_query(tmp_path):
 
 
 def test_given_temp_dir_when_create_session_then_db_file_is_created(tmp_path):
-    with patch_db_dir(str(tmp_path)):
+    with patch_env_var('DB_DIR', str(tmp_path)):
         with db.create_session() as session:
             session.commit()
         db_file = tmp_path / 'chuvisco_db.sqlite'
