@@ -8,10 +8,13 @@ from chuvisco import db
 
 @contextlib.contextmanager
 def patch_db_dir(new_value: str):
-    original_db_dir = os.environ['DB_DIR']
+    original_db_dir = os.environ.get('DB_DIR', None)
     os.environ['DB_DIR'] = new_value
     yield
-    os.environ['DB_DIR'] = original_db_dir
+    if original_db_dir is None:
+        del os.environ['DB_DIR']
+    else:
+        os.environ['DB_DIR'] = original_db_dir
 
 
 @pytest.fixture(scope='function', autouse=True)
