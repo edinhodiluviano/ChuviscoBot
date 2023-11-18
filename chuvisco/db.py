@@ -56,33 +56,23 @@ def create_session() -> sa.orm.Session:
         session.close()
 
 
-class Message(Base):
+class RawMessage(Base):
     '''A telegram message saved in the database.'''
 
     __tablename__ = 'message'
 
     id = sa.Column(sa.Integer, primary_key=True)  # NOQA: A003
     timestamp = sa.Column(sa.DateTime, index=True, nullable=False)
-    text = sa.Column(sa.String, index=False)
-    channel_id = sa.Column(sa.Integer, index=True)
-    channel_title = sa.Column(sa.String, index=False)
-    sender_user_id = sa.Column(sa.Integer, index=True)
-    sender_first_name = sa.Column(sa.String, index=False)
-    sender_username = sa.Column(sa.String, index=False)
+    message = sa.Column(sa.JSON, index=False)
 
     @classmethod
     def from_update(
         cls,  # NOQA: ANN102
         update: telegram.Update,
-    ) -> 'Message':
+    ) -> 'RawMessage':
         'Create an instace of a message from an Update.'
         obj = cls(
             timestamp=dt.datetime.now(tz=dt.timezone.utc),
-            text=update.message.text,
-            channel_id=update.message.chat.id,
-            channel_title=update.message.chat.title,
-            sender_user_id=update.message.from_user.id,
-            sender_first_name=update.message.from_user.first_name,
-            sender_username=update.message.from_user.username,
+            message=update.message.to_dict(),
         )
         return obj

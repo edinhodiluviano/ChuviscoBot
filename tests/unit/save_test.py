@@ -20,7 +20,7 @@ async def test_when_call_save_then_return_none(
 
 @pytest.mark.asyncio()
 async def test_when_call_save_then_message_table_count_increase_one(session):
-    stmt = sa.select(sa.func.count()).select_from(db.Message)
+    stmt = sa.select(sa.func.count()).select_from(db.RawMessage)
     count_before = session.execute(stmt).scalar()
 
     update = create_update()

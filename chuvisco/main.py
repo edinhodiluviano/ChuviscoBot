@@ -16,13 +16,9 @@ async def save(
     *args,  # NOQA: ARG001, ANN002
 ) -> None:
     '''
-    Save a message and some metadata.
-
-    - message text
-    - sender username
-    - timestamp
+    Save the raw message + the timestamp
     '''
-    message = db.Message.from_update(update=update)
+    message = db.RawMessage.from_update(update=update)
     with db.create_session() as session:
         session.add(message)
         session.commit()
