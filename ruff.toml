@@ -6,6 +6,7 @@ select = [
 
 ignore = [
     "PLR2004",  # Magic value used in comparison, consider replacing with a constant variable
+    "D202",  # No blank lines allowed after function docstring
     "D203",  # one-blank-line-before-class
     "D212",  # multi-line-summary-second-line
     "D300", # Use triple double quotes `"""`
