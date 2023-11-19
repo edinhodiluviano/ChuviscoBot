@@ -1,0 +1,6 @@
+Hum... então vc quer raquear algo, ne?!
+Parabens, vc esta no lugar certo!
+Recomendamos começar pelo sistema da NASA. Nossas fontes indicam que a nasa usa o software NGINX (https://nginx.org/) no seu website. Mas esse é um software russo... tem caroço nesse angu!!!
+Com uma cautelosa busca em toda a internet também descobrimos parte do código que esta sendo executado pelo site da nasa. Ele esta nesse site: https://raw.githubusercontent.com/nginx/nginx/master/src/core/ngx_array.c
+Talvez você consiga descobrir alguma falha de segurança nivel 72 ou mais grave nesse código.
+Boa sorte!
